@@ -4,7 +4,7 @@
 * */
 import React,{Component} from 'react'
 // 1.7 引入antd   yarn add antd
-import {Button, message} from 'antd'
+import { message} from 'antd'
 //2.2引入路由
 import  {BrowserRouter,Route,Switch} from 'react-router-dom'
 import Login from './pages/login/login'
