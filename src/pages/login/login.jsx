@@ -3,6 +3,7 @@ import {Form, Icon, Input, Button,Checkbox} from 'antd';
 // 2.6引入样式
 import './login.less'
 import logo from './images/logo.png'
+import {reqLogin} from '../../api'
 
 const Item = Form.Item   //不能写在import之前 会报错
 /*
@@ -19,12 +20,31 @@ class Login extends Component {
         //获取表单项的输入数据
         const values = form.getFieldsValue()
         //对所有表单项进行验证
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             //校验成功
             if (!err) {
-                console.log('提交登录的请求: ', values);
+
+                const{username,password}=values
+                //3.4使用async await 替换promise  async 写在await所在函数定义的左侧
+                // try {
+                    const response = await reqLogin(username, password)
+                    console.log('请求成功' + response.data.respCode)
+                    console.log('请求成功' + response.data.respDesc)
+                // }catch (error) {
+                //     console.log('请求出错',error)
+                // }
+                //3.3 ajax请求登录
+                  /* reqLogin(username,password).then(response=>{     //为什么是response:github 中axios案例返回 respnose和error
+                        console.log('成功了',response.data)
+                        console.log('成功了',response)
+                    }
+                ).catch(error=>{
+                    console.log('失败了',error)
+                })*/
+
+                // console.log('提交登录的请求: ', values);
             }else{
-                console.log('校验失败')
+                console.log('登录校验表单失败')
             }
         });
 
