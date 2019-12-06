@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import {Form, Icon, Input, Button,Checkbox} from 'antd';
+import {Form, Icon, Input, Button,Checkbox,message} from 'antd';
 // 2.6引入样式
 import './login.less'
 import logo from './images/logo.png'
 import {reqLogin} from '../../api'
-
+import  memoryUtils from '../../utils/memoryUtils'
 const Item = Form.Item   //不能写在import之前 会报错
 /*
 * 2.1登录的路由组件
@@ -27,9 +27,22 @@ class Login extends Component {
                 const{username,password}=values
                 //3.4使用async await 替换promise  async 写在await所在函数定义的左侧
                 // try {
-                    const response = await reqLogin(username, password)
-                    console.log('请求成功' + response.data.respCode)
-                    console.log('请求成功' + response.data.respDesc)
+                    const result = await reqLogin(username, password) // ***请求成功并不代表 登录成功
+                // const result = response.data {respCode: respCode :data}  3.5.2优化后注释
+                    console.log('请求成功' + result.respCode)
+                    console.log('请求成功' + result.respDesc)
+                    console.log('请求成功' + result.data.username)
+                if(result.respCode===0){ //登录成功
+                    message.success(result.respDesc)
+                    //保存user
+                    const user=result.data
+                    memoryUtils .user=user //保存在内存中
+                    //跳转到管理界面（不需要再回退）
+                    this.props.history.replace('/')
+                }else{          //登录失败
+                    message.error(result.respDesc)
+                }
+
                 // }catch (error) {
                 //     console.log('请求出错',error)
                 // }

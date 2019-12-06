@@ -9,8 +9,12 @@ import  Mock from 'mockjs'
 })
 
 Mock.mock('/login/login',{
-    respCode:"0",
-    respDesc:"用户名密码正确"
+    respCode:0,
+    respDesc:"登录成功",
+    data:{
+        username:"hahaha",
+        password:"asdasd",
+    }
     }
 
 )
