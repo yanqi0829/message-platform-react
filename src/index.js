@@ -7,5 +7,12 @@ import ReactDOM from 'react-dom'
 import App from './App'
 //1.9 引入antd 样式
 // import 'antd/dist/antd.css'
+//3.7读取数据中保存的user，保存到内存中
+import memoryUtils from './utils/memoryUtils'
+import storageUtils from './utils/storageUtils'
+
+const user = storageUtils.getUser()
+memoryUtils.user = user
+
 //1.6 将App组件标签渲染到 主页面index的div上
-ReactDOM.render(<App/>,document.getElementById('root'))
+ReactDOM.render(<App/>, document.getElementById('root'))
