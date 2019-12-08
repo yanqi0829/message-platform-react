@@ -12,3 +12,12 @@ export  const  reqLogin=(username,password)=>ajax('/login/login',{username,passw
 
 //添加用户
 export  const  reqAddUser=(user)=>ajax('/manage/user/add',user,'POST')
+
+//查询网关信息 查询使用get请求
+export  const  reqGatewayInfo=()=>ajax('/gateway/query')
+
+//新增网关
+export  const  addGateway=(gatewayInfo)=>ajax('/gateway/add',gatewayInfo,'POST')
+
+//更新网关信息
+export  const  updateGatewayInfo=(gatewayInfo)=>ajax('/gateway/update',gatewayInfo,'POST')
