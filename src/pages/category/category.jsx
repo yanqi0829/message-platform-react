@@ -36,6 +36,16 @@ export default class Category extends Component {
                 title: '网关描述',
                 dataIndex: 'detail',
                 key: 'detail',
+                onCell: () => {
+                    return {
+                        style: {
+                            maxWidth: 150,
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow:'ellipsis',
+                        }
+                    }
+                }
             },
             {
                 title: '对接时间',
@@ -46,7 +56,7 @@ export default class Category extends Component {
                 title: '操作',
                 dataIndex: '',
                 key: 'x',
-                width: 200,
+                width: 150,
                 render: (gateway) => (   /*5.5 事件函数传参数*/
                     <span>
          {/*  <LinkButton onClick={this.queryDetail(gateway)}>查看</LinkButton>  可以发现刷新直接执行6次*/}
@@ -111,27 +121,38 @@ export default class Category extends Component {
     /*添加(网关)*/
     addCategory = () => {
         console.log('addCategory')
+        //隐藏确认框
+        //收集数据 提交添加请求
+        //清除输入数据
+        //重新获取网关列表
     }
 
 
     /*更新分类（网关）*/
-    updateCategory =  async () => {
-        // console.log('updateCategory')
-        const gatewayInfo= this.gateway
-        //5.8.3隐藏确定框
-        this.setState({
-            showStatus: 0
+    updateCategory =() => {
+        //进行表单验证
+        this.form.validateFields(async(err,values)=>{
+            if(!err){
+                // console.log('updateCategory')
+                const gatewayInfo= this.gateway
+                //5.8.3隐藏确定框
+                this.setState({
+                    showStatus: 0
+                })
+                //5.8.4 发送请求
+                const updateInfo=this.form.getFieldsValue()
+                // console.log('子给父的表单',updateInfo)
+                //清除输入数据
+                this.form.resetFields()
+                const result= await  updateGatewayInfo(updateInfo)
+                if(result.respCode===0){
+                    //5.8.5重新显示列表
+                    this.getGateways()
+                }
+
+            }
         })
-        //5.8.4 发送请求
-        const updateInfo=this.form.getFieldsValue()
-        // console.log('子给父的表单',updateInfo)
-        //清除输入数据
-        this.form.resetFields()
-      const result= await  updateGatewayInfo(updateInfo)
-        if(result.respCode===0){
-            //5.8.5重新显示列表
-        this.getGateways()
-        }
+
 
 
 
@@ -178,14 +199,21 @@ export default class Category extends Component {
                         onCancel={this.handleCancel}
                     >
                         <AddForm/>
-                        <p>添加界面...</p>
+                        <p>添加网关...</p>
                     </Modal>
 
                     <Modal
                         title="查看网关信息"
                         visible={showStatus === 3}
-                        onOk={this.handleCancel}
-                        onCancel={this.handleCancel}
+                        onOk={() => {
+                            this.setState({
+                                showStatus: 0
+                            })}}
+                        onCancel={() => {
+                                this.setState({
+                                    showStatus: 0
+                                })}}
+
                     >
                         <p>查看信息...</p>
                     </Modal>

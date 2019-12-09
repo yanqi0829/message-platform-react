@@ -19,18 +19,17 @@ class AddForm extends Component {
             <div>
                 <Form>
                     {/*5.7.1 需要把组件用Item包裹，增加间隔*/}
-                    <Item>
+                   {/* <Item>
                         {
                             getFieldDecorator('parentId',{
-                                initialValue:'0'
+                                initialValue:oneId
                             })(
                                 <Select>
-                                    <Option value='0'>你号</Option>
+                                    { options.map((item)=> <Option value={item.id}>item.name</Option>)}
                                 </Select>
                             )
                         }
-
-                    </Item>
+                    </Item>*/}
                     <Item>
                         {
                             getFieldDecorator('gatewayCode',{

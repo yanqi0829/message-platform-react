@@ -15,7 +15,7 @@ const menuList = [
                 icon: 'bars'
             },
             {
-                title: '模版管理',
+                title: '模版预览',
                 key: '/template',
                 icon: 'tool'
             },
