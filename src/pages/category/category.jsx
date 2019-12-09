@@ -9,7 +9,7 @@ import {
 } from 'antd'
 import './index.less'
 import LinkButton from '../../components/link-button'
-import {reqGatewayInfo} from '../../api/'
+import {reqGatewayInfo,updateGatewayInfo,addGateway} from '../../api/'
 import AddForm from './add-form'
 import UpdateForm from './update-form'
 
@@ -53,7 +53,7 @@ export default class Category extends Component {
                         {/*如何向事件回调函数传参：先定义匿名函数，再调用函数*/}
                         <LinkButton onClick={() => this.queryDetail(gateway)}>查看</LinkButton>
                         {/*{1===2 ? <LinkButton>修改</LinkButton>:null}*/}
-                        <LinkButton onClick={this.showUpdate}>修改</LinkButton>
+                        <LinkButton onClick={()=>this.showUpdate(gateway)}>修改</LinkButton>
             </span>
                 ),
             },
@@ -61,6 +61,7 @@ export default class Category extends Component {
     }
     /*显示查看确认框*/
     queryDetail = (gateway) => {
+        console.log('queryDetail',gateway)
         this.setState({
             showStatus: 3
         })
@@ -83,7 +84,11 @@ export default class Category extends Component {
 
     }
     /*显示修改的确认框*/
-    showUpdate = () => {
+    showUpdate = (gateway) => {
+        // console.log('showUpdate',gateway)
+        //保存网关对象
+        this.gateway=gateway
+        //更新状态
         this.setState({
             showStatus: 2
         })
@@ -100,6 +105,8 @@ export default class Category extends Component {
         this.setState({
             showStatus: 0
         })
+        //清除输入数据
+        this.form.resetFields()
     }
     /*添加(网关)*/
     addCategory = () => {
@@ -108,8 +115,25 @@ export default class Category extends Component {
 
 
     /*更新分类（网关）*/
-    updateCategory = () => {
-        console.log('updateCategory')
+    updateCategory =  async () => {
+        // console.log('updateCategory')
+        const gatewayInfo= this.gateway
+        //5.8.3隐藏确定框
+        this.setState({
+            showStatus: 0
+        })
+        //5.8.4 发送请求
+        const updateInfo=this.form.getFieldsValue()
+        // console.log('子给父的表单',updateInfo)
+        //清除输入数据
+        this.form.resetFields()
+      const result= await  updateGatewayInfo(updateInfo)
+        if(result.respCode===0){
+            //5.8.5重新显示列表
+        this.getGateways()
+        }
+
+
 
     }
 
@@ -125,6 +149,8 @@ export default class Category extends Component {
 
     render() {
         const {gateways, loading, showStatus} = this.state
+        //读取指定的网关
+        const gateway =this.gateway||{} //如果还没有指定一个空对象
         const title = '网关列表'
         const extra = (
             <Button type='primary' onClick={this.showAdd}>
@@ -164,12 +190,14 @@ export default class Category extends Component {
                         <p>查看信息...</p>
                     </Modal>
                     <Modal
-                        title="修改网关"
+                        title="修改网关信息"
                         visible={showStatus === 2}
                         onOk={this.updateCategory}
                         onCancel={this.handleCancel}
                     >
-                        <UpdateForm/>
+                        {/*5.8.1 修改网关信息  gatewayInfo是父组件传给子组件的  那么子组件如何传父组件--函数传参 */}
+                        <UpdateForm gatewayInfo={gateway}
+                                    setForm={(form)=>{this.form=form}}/>
                         <p>修改网关信息...</p>
                     </Modal>
 

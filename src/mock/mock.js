@@ -1,5 +1,6 @@
 import  Mock from 'mockjs'
 import ajax from "../api/ajax";
+import {updateGatewayInfo} from "../api";
 
  Mock.mock({
     // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
@@ -87,5 +88,9 @@ Mock.mock('/gateway/query',{
         ]
     }
 )
+Mock.mock('/gateway/update',{
+        respCode:0,
+        respDesc:"登录成功",
+    }
 
-
+)
