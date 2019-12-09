@@ -10,20 +10,8 @@ import {
 import './index.less'
 import LinkButton from '../../components/link-button'
 import {reqGatewayInfo} from '../../api/'
-
-const dataSource = [
-    {
-        gatewayCode: '342',
-        detail: '全网网关',
-        joinTime: '2019',
-    },
-    {
-        gatewayCode: '10017',
-        detail: '本网网关',
-        joinTime: '2019',
-    },
-];
-
+import AddForm from './add-form'
+import UpdateForm from './update-form'
 
 /*
 5.1网关分类路由  Card 嵌套Table
@@ -32,7 +20,8 @@ export default class Category extends Component {
     //5.2 列表信息放在组件的状态里面，只要状态更新组件就会重新渲染
     state = {
         gateways: [],  //网关列表
-        loading: false   //5.4.1 是否正在获取数据中
+        loading: false,   //5.4.1 是否正在获取数据中
+        showStatus: 0,   //表示添加、修改的确认框是否显示  0都不显示， 1显示添加 2显示修改  3查看信息
 
     }
     //5.3初始化table所有列的数组
@@ -64,15 +53,18 @@ export default class Category extends Component {
                         {/*如何向事件回调函数传参：先定义匿名函数，再调用函数*/}
                         <LinkButton onClick={() => this.queryDetail(gateway)}>查看</LinkButton>
                         {/*{1===2 ? <LinkButton>修改</LinkButton>:null}*/}
-                        <LinkButton>修改</LinkButton>
+                        <LinkButton onClick={this.showUpdate}>修改</LinkButton>
             </span>
                 ),
             },
         ];
     }
-
+    /*显示查看确认框*/
     queryDetail = (gateway) => {
-        message.success('ok')
+        this.setState({
+            showStatus: 3
+        })
+
     }
 
     /*异步获取网关信息*/
@@ -90,6 +82,36 @@ export default class Category extends Component {
         }
 
     }
+    /*显示修改的确认框*/
+    showUpdate = () => {
+        this.setState({
+            showStatus: 2
+        })
+    }
+
+    /*显示添加的确认框*/
+    showAdd = () => {
+        this.setState({
+            showStatus: 1
+        })
+    }
+    /*响应点击取消 隐藏确定框*/
+    handleCancel = () => {
+        this.setState({
+            showStatus: 0
+        })
+    }
+    /*添加(网关)*/
+    addCategory = () => {
+        console.log('addCategory')
+    }
+
+
+    /*更新分类（网关）*/
+    updateCategory = () => {
+        console.log('updateCategory')
+
+    }
 
     /*为第一次render准备数据*/
     componentWillMount() {
@@ -102,10 +124,10 @@ export default class Category extends Component {
     }
 
     render() {
-        const {gateways, loading} = this.state
+        const {gateways, loading, showStatus} = this.state
         const title = '网关列表'
         const extra = (
-            <Button type='primary'>
+            <Button type='primary' onClick={this.showAdd}>
                 <Icon type='plus'/>
                 添加
             </Button>
@@ -122,6 +144,35 @@ export default class Category extends Component {
                            rowKey='key'
                            pagination={{defaultPageSize: 6, showQuickJumper: true}}
                     />
+                    {/*5.6  确认框*/}
+                    <Modal
+                        title="添加网关"
+                        visible={showStatus === 1}
+                        onOk={this.addCategory}
+                        onCancel={this.handleCancel}
+                    >
+                        <AddForm/>
+                        <p>添加界面...</p>
+                    </Modal>
+
+                    <Modal
+                        title="查看网关信息"
+                        visible={showStatus === 3}
+                        onOk={this.handleCancel}
+                        onCancel={this.handleCancel}
+                    >
+                        <p>查看信息...</p>
+                    </Modal>
+                    <Modal
+                        title="修改网关"
+                        visible={showStatus === 2}
+                        onOk={this.updateCategory}
+                        onCancel={this.handleCancel}
+                    >
+                        <UpdateForm/>
+                        <p>修改网关信息...</p>
+                    </Modal>
+
                 </Card>
             </div>
         )
