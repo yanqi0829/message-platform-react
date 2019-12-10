@@ -5,7 +5,7 @@ import TemplateDetail from './detail'
 import TemplateHome from './home'
 
 /*
-模版路由
+模版路由组件
  */
 export default class Template extends Component {
     render() {

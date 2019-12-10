@@ -1,4 +1,9 @@
 import React, {Component} from 'react'
+import{
+    Card,
+    Icon,
+    List
+} from 'antd'
 /*
 详情页子路由组件
  */

@@ -11,6 +11,7 @@ import  {message} from 'antd'
  */
 import  '../mock/mock'
 export  default  function ajax(url,data={},type='GET' ) {
+    console.log(url,data)
     /*3.5 统一处理请求异常  在外层包一个promise对象
     在请求出错时，不reject（error） 而是显示错误提示  注释掉3.4的 try catch*/
     return new Promise((resolve,reject)=>{

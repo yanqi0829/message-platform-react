@@ -21,3 +21,7 @@ export  const  addGateway=(gatewayInfo)=>ajax('/gateway/add',gatewayInfo,'POST')
 
 //更新网关信息
 export  const  updateGatewayInfo=(gatewayInfo)=>ajax('/gateway/update',gatewayInfo,'POST')
+
+//获取模版分页列表  mock get 传参未解决
+// export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query',{pageNum,pageSize})
+export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query')

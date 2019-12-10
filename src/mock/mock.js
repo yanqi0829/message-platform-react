@@ -1,8 +1,8 @@
-import  Mock from 'mockjs'
+import Mock from 'mockjs'
 import ajax from "../api/ajax";
 import {updateGatewayInfo} from "../api";
 
- Mock.mock({
+Mock.mock({
     // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
     'list|1-10': [{
         // 属性 id 是一个自增数，起始值为 1，每次增 1
@@ -10,20 +10,19 @@ import {updateGatewayInfo} from "../api";
     }]
 })
 
-Mock.mock('/login/login',{
-    respCode:0,
-    respDesc:"登录成功",
-    data:{
-        username:"hahaha",
-        password:"asdasd",
+Mock.mock('/login/login', {
+        respCode: 0,
+        respDesc: "登录成功",
+        data: {
+            username: "hahaha",
+            password: "asdasd",
+        }
     }
-    }
-
 )
-Mock.mock('/gateway/query',{
-        respCode:0,
-        respDesc:"查询成功",
-        data:[
+Mock.mock('/gateway/query', {
+        respCode: 0,
+        respDesc: "查询成功",
+        data: [
             {
 
                 gatewayCode: '342',
@@ -88,9 +87,58 @@ Mock.mock('/gateway/query',{
         ]
     }
 )
-Mock.mock('/gateway/update',{
-        respCode:0,
-        respDesc:"登录成功",
+Mock.mock('/gateway/update', {
+        respCode: 0,
+        respDesc: "登录成功",
     }
+)
 
+
+Mock.mock('/template/query', {
+        respCode: 0,
+        respDesc: "查询成功",
+        total: 6,
+        data: [
+            {
+                gatewayName: '342',
+                templateId: '123123132123',
+                templateContent: '2019阿萨德按时',
+                requestTime: '2019',
+                status: '0',
+            },
+            {
+                gatewayName: '10017',
+                templateId: '123124153132123',
+                templateContent: '2019阿萨德按时',
+                requestTime: '2019',
+                status: '0',
+            },
+            {
+                gatewayName: '342',
+                templateId: '12312311232123',
+                templateContent: '2019阿萨德按时',
+                requestTime: '2019',
+                status: '0',
+            },
+            {
+                gatewayName: '342',
+                templateId: '1231231456451232123',
+                templateContent: '2019阿萨德按时',
+                requestTime: '2019',
+                status: '0',
+            }, {
+                gatewayName: '10017',
+                templateId: '123123112454532123',
+                templateContent: '2019阿萨德按时',
+                requestTime: '2019',
+                status: '0',
+            }, {
+                gatewayName: '342',
+                templateId: '1231456452311232123',
+                templateContent: '2019阿萨德按时',
+                requestTime: '2019',
+                status: '0',
+            },
+        ]
+    }
 )
