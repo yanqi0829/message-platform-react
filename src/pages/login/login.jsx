@@ -91,7 +91,7 @@ class Login extends Component {
             return <Redirect to={'/'}/>
         }
         const {form} = this.props
-        const {getFieldDecorator} = form
+        const {getFieldDecorator} = form  //表单验证 收集数据
         return (
             <div className="login">
                 <header className="login-header">
@@ -116,7 +116,7 @@ class Login extends Component {
                             同时下方为js代码  需要大括号
                             获取输入框的值需要使用第一个参数 即username 标示名称
                             */}
-                            {getFieldDecorator('username', {  //属性名是特定的一些名称
+                            {getFieldDecorator('username', {  //属性名是特定的一些名称，获取值
                                 //声明式验证:直接使用定义好的验证规则进行验证
                                 rules: [{required: true, message: '入用户名必须输入'},
                                     {min: 4, message: '用户名至少4位'},
