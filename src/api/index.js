@@ -10,7 +10,7 @@ export function reqLogin(username,password) {
 }*/
 export  const  reqLogin=(username,password)=>ajax('/login/login',{username,password},'POST')
 
-//添加用户
+//添加用户 user是个对象
 export  const  reqAddUser=(user)=>ajax('/manage/user/add',user,'POST')
 
 //查询网关信息 查询使用get请求

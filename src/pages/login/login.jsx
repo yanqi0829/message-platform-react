@@ -21,7 +21,7 @@ class Login extends Component {
         const {form} = this.props
         //获取表单项的输入数据
         const values = form.getFieldsValue()
-        //对所有表单项进行验证
+        //2.12对所有表单项进行验证
         this.props.form.validateFields(async (err, values) => {
             //校验成功
             if (!err) {
@@ -31,15 +31,14 @@ class Login extends Component {
                 // try {
                     const result = await reqLogin(username, password) // ***请求成功并不代表 登录成功
                 // const result = response.data {respCode: respCode :data}  3.5.2优化后注释
-                    console.log('请求成功' + result.respCode)
-                    console.log('请求成功' + result.respDesc)
-                    console.log('请求成功' + result.data.username)
+                //     console.log('请求成功' + result.respCode)
+                //     console.log('请求成功' + result.respDesc)
+                //     console.log('请求成功' + result.data.username)
                 if(result.respCode===0){ //登录成功
-                    message.success(result.respDesc)
+                    message.success("登录成功")
                     //保存user
                     const user=result.data
                     memoryUtils .user=user//保存在内存中
-                    console.log('怎么不跳转')
                     storageUtils.saveUser(user)  //保存到local中跳转到管理界面（不需要再回退）
                     this.props.history.replace('/')
 
@@ -61,7 +60,7 @@ class Login extends Component {
 
                 // console.log('提交登录的请求: ', values);
             }else{
-                console.log('登录校验表单失败')
+                // console.log('登录校验表单失败') 其实什么也不用写
             }
         });
 
@@ -135,7 +134,7 @@ class Login extends Component {
                             {getFieldDecorator('password', {
                                 rules: [
                                     {
-                                        validator:this.validatePwd
+                                        validator:this.validatePwd   /*验证器*/
                                     }
                                 ],
                             })(

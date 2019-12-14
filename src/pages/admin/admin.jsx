@@ -23,9 +23,9 @@ export  default  class Admin extends Component{
     render() {
         const user = memoryUtils.user
         /*如果内存中没有存储user==》没有登录*/
-        // if(!user||!user._id){   不好使
+        // if(!user||!user._id){
         // console.log(user,user._id)
-        console.log('属性个数',Object.getOwnPropertyNames(user).length)
+        // console.log('属性个数',Object.getOwnPropertyNames(user).length)
         if(Object.getOwnPropertyNames(user).length===0){
         /*在render()中自动跳转到登录界面  和事件回调函数的跳转history不一样*/
             return <Redirect to={'/login'}/>
