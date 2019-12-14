@@ -29,7 +29,6 @@ const {SubMenu} = Menu;
     getMenuNodes = (menuList) => {
         const path = this.props.location.pathname
         return menuList.map(item => {
-
                 if (!item.children) {
                     return (
                         <Menu.Item key={item.key}>
@@ -44,7 +43,7 @@ const {SubMenu} = Menu;
                     //查找一个与当前请求路径匹配的子Item
                     const cItem = item.children.find(cItem=>cItem.key===path)
                     if(cItem){
-                        this.openKey=item.key
+                        this.openKey=item.key  //得到父的key
                     }
                     return (
                         <SubMenu
@@ -75,20 +74,19 @@ const {SubMenu} = Menu;
         // debugger
         //得到当前请求的路径
         const path = this.props.location.pathname
-        // console.log('render',path)
         //得到需要打开的菜单项的key
         const openKey=this.openKey
-        return (
+
+         return (
             <div className='left-nav'>
                 <Link to='/' className='left-nav-header'>
                     <img src={logo} alt="logo"/>
                     <h1>短信平台</h1>
-
                 </Link>
                 <Menu
                     // defaultSelectedKeys={[path]}
-                    selectedKeys={[path]}   // 访问/ 时更新首页菜单选中  因为 leftNav 组件更新
-                    defaultOpenKeys={[openKey]}
+                    selectedKeys={[path]}   // 刷新页面，依然选中原有菜单项  因为 leftNav 组件更新
+                    defaultOpenKeys={[openKey]}   //默认展开
                     mode="inline"
                     theme="dark"
                 >

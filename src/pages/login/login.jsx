@@ -101,7 +101,7 @@ class Login extends Component {
                     <h1>短信平台管理系统</h1>
                 </header>
                 <section className="login-content">
-                    <h2>用户登录 一下</h2>
+                    <h2>用户登录</h2>
                     {/*2.9 Form 表单 粘贴antd代码*/}
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Item>
