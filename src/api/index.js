@@ -25,3 +25,10 @@ export  const  updateGatewayInfo=(gatewayInfo)=>ajax('/gateway/update',gatewayIn
 //获取模版分页列表  mock get 传参未解决
 // export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query',{pageNum,pageSize})
 export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query')
+
+
+//获取所有角色列表 查询使用get请求
+export  const  reqRolesInfo=()=>ajax('/gateway/role')
+
+//获取所有角色列表 查询使用get请求
+export  const  reqAddRole=(name)=>ajax('/gateway/role/add',{name},"POST")

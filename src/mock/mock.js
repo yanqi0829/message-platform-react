@@ -142,3 +142,16 @@ Mock.mock('/template/query', {
         ]
     }
 )
+
+
+
+Mock.mock('/gateway/role', {
+        respCode: 0,
+        respDesc: "查询成功",
+        data: [
+            {role_name: "经理", create_time: '2019年十一', auth_time: "2020年年", auth_name: '经理人',_id:"asdasdafasfsdf"},
+            {role_name: "sdjh ", create_time: '2019年十一', auth_time: "2020年年", auth_name: '经理人',_id:"7a523sd4as4d"},
+            {role_name: "asd ", create_time: '2019年十一', auth_time: "2020年年", auth_name: '经理人',_id:"asd84as56d4sdf"},
+        ]
+    }
+)

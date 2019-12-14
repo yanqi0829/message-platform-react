@@ -7,7 +7,7 @@ module.exports = override(
         // style: 'css', //自动打包相关的样式
         style: true  //处理less文件
     }),
-
+    //1.11 更改package.json
     //1.12使用less-loader对源码中的less变量进行覆盖
     addLessLoader({
         javascriptEnabled: true,
