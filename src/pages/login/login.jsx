@@ -43,7 +43,7 @@ class Login extends Component {
                     this.props.history.replace('/')
 
                 }else{          //登录失败
-                    message.error(result.respDesc)
+                    message.error("用户名或密码错误")
                 }
 
                 // }catch (error) {

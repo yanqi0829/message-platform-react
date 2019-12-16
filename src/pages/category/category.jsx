@@ -9,9 +9,11 @@ import {
 } from 'antd'
 import './index.less'
 import LinkButton from '../../components/link-button'
-import {reqGatewayInfo,updateGatewayInfo,addGateway} from '../../api/'
+import {reqGatewayInfo, updateGatewayInfo, addGateway} from '../../api/'
 import AddForm from './add-form'
 import UpdateForm from './update-form'
+import memoryUtils from '../../utils/memoryUtils'
+import {formateDate} from '../../utils/dateUtils'
 
 /*
 5.1网关分类路由  Card 嵌套Table
@@ -33,6 +35,11 @@ export default class Category extends Component {
                 key: 'gatewayCode',
             },
             {
+                title: '网关名称',
+                dataIndex: 'gatewayName',
+                key: 'gatewayName',
+            },
+            {
                 title: '网关描述',
                 dataIndex: 'detail',
                 key: 'detail',
@@ -42,28 +49,31 @@ export default class Category extends Component {
                             maxWidth: 150,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
-                            textOverflow:'ellipsis',
+                            textOverflow: 'ellipsis',
                         }
                     }
                 }
             },
             {
-                title: '对接时间',
-                dataIndex: 'joinTime',
-                key: 'joinTime',
+                title: '接入时间',
+                dataIndex: 'createTime',
+                key: 'createTime',
+                render: (createTime) => formateDate(createTime)
             },
             {
                 title: '操作',
                 dataIndex: '',
                 key: 'x',
                 width: 150,
-                render: (gateway) => (   /*5.5 事件函数传参数*/
+                render: (gateway) => (   /*5.5 事件函数传参数 gateway 为当前行的参数*/
                     <span>
-         {/*  <LinkButton onClick={this.queryDetail(gateway)}>查看</LinkButton>  可以发现刷新直接执行6次*/}
+         {/*  <LinkButton onClick={this.queryDetail(gateway)}>查看</LinkButton>  可以发现刷新每渲染一行执行一次*/}
                         {/*如何向事件回调函数传参：先定义匿名函数，再调用函数*/}
                         <LinkButton onClick={() => this.queryDetail(gateway)}>查看</LinkButton>
                         {/*{1===2 ? <LinkButton>修改</LinkButton>:null}*/}
-                        <LinkButton onClick={()=>this.showUpdate(gateway)}>修改</LinkButton>
+                        {memoryUtils.user.role != "user" ?
+                            <LinkButton onClick={() => this.showUpdate(gateway)}>修改</LinkButton> : null}
+                        {/*<LinkButton onClick={()=>this.showUpdate(gateway)}>修改</LinkButton>*/}
             </span>
                 ),
             },
@@ -71,7 +81,7 @@ export default class Category extends Component {
     }
     /*显示查看确认框*/
     queryDetail = (gateway) => {
-        console.log('queryDetail',gateway)
+        this.gateway = gateway
         this.setState({
             showStatus: 3
         })
@@ -91,13 +101,12 @@ export default class Category extends Component {
         } else {
             message.error('获取网关列表失败')
         }
-
     }
     /*显示修改的确认框*/
     showUpdate = (gateway) => {
         // console.log('showUpdate',gateway)
         //保存网关对象
-        this.gateway=gateway
+        this.gateway = gateway
         //更新状态
         this.setState({
             showStatus: 2
@@ -120,42 +129,52 @@ export default class Category extends Component {
     }
     /*添加(网关)*/
     addCategory = () => {
-        console.log('addCategory')
-        //隐藏确认框
-        //收集数据 提交添加请求
-        //清除输入数据
-        //重新获取网关列表
+        // 表单验证
+        this.form.validateFields(async (err, values) => {
+            if (!err) {
+                const gatewayInfo = this.gateway
+                this.setState({
+                    showStatus: 0
+                })
+
+                const addInfo = this.form.getFieldsValue()
+                //清除输入数据
+                this.form.resetFields()
+                const result = await addGateway(addInfo)
+                if (result.respCode === 0) {
+
+                    this.getGateways()
+                }else{
+                    message.error("添加失败！")
+                }
+            }
+        })
     }
 
 
     /*更新分类（网关）*/
-    updateCategory =() => {
+    updateCategory = () => {
         //进行表单验证
-        this.form.validateFields(async(err,values)=>{
-            if(!err){
-                // console.log('updateCategory')
-                const gatewayInfo= this.gateway
+        this.form.validateFields(async (err, values) => {
+            if (!err) {
+                const gatewayInfo = this.gateway
                 //5.8.3隐藏确定框
                 this.setState({
                     showStatus: 0
                 })
                 //5.8.4 发送请求
-                const updateInfo=this.form.getFieldsValue()
-                // console.log('子给父的表单',updateInfo)
+                const updateInfo = this.form.getFieldsValue()
                 //清除输入数据
                 this.form.resetFields()
-                const result= await  updateGatewayInfo(updateInfo)
-                if(result.respCode===0){
+                const result = await updateGatewayInfo(updateInfo)
+                if (result.respCode === 0) {
                     //5.8.5重新显示列表
                     this.getGateways()
+                }else{
+                    message.error("修改失败！")
                 }
-
             }
         })
-
-
-
-
     }
 
     /*为第一次render准备数据*/
@@ -170,8 +189,8 @@ export default class Category extends Component {
 
     render() {
         const {gateways, loading, showStatus} = this.state
-        //读取指定的网关
-        const gateway =this.gateway||{} //如果还没有指定一个空对象
+        //读取指定的网关this.gateway
+        const gateway = this.gateway || {} //如果还没有指定一个空对象  因为上来 column中render会先渲染
         const title = '网关列表'
         const extra = (
             <Button type='primary' onClick={this.showAdd}>
@@ -198,35 +217,45 @@ export default class Category extends Component {
                         onOk={this.addCategory}
                         onCancel={this.handleCancel}
                     >
-                        <AddForm/>
-                        <p>添加网关...</p>
+                        <AddForm gatewayInfo={gateway}
+                                 setForm={(form) => {
+                                     this.form = form
+                                 }}/>
+
                     </Modal>
 
                     <Modal
-                        title="查看网关信息"
+                        title={gateway.gatewayName}
                         visible={showStatus === 3}
+                        footer={null}
+                        // okButtonProps={{ disabled: true }}
+                        // cancelButtonProps={{ disabled: true }}
                         onOk={() => {
                             this.setState({
                                 showStatus: 0
-                            })}}
+                            })
+                        }}
                         onCancel={() => {
-                                this.setState({
-                                    showStatus: 0
-                                })}}
+                            this.setState({
+                                showStatus: 0
+                            })
+                        }}
 
                     >
-                        <p>查看信息...</p>
+                        <p>{gateway.detail}</p>
                     </Modal>
                     <Modal
-                        title="修改网关信息"
+                        title="修改信息"
                         visible={showStatus === 2}
                         onOk={this.updateCategory}
                         onCancel={this.handleCancel}
                     >
-                        {/*5.8.1 修改网关信息  gatewayInfo是父组件传给子组件的  那么子组件如何传父组件--函数传参 */}
+                        {/*5.8.1 修改网关信息  gatewayInfo是父组件传给子组件的  那么子组件如何传父组件？--函数传参 */}
                         <UpdateForm gatewayInfo={gateway}
-                                    setForm={(form)=>{this.form=form}}/>
-                        <p>修改网关信息...</p>
+                                    setForm={(form) => {
+                                        this.form = form
+                                    }}/>
+
                     </Modal>
 
                 </Card>

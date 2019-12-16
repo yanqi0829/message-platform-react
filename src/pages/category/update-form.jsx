@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 
 const Item = Form.Item
 const Option = Select.Option
-
+const { TextArea } = Input;
 /*
 * 5.7
 * 网关管理的添加组件
@@ -35,18 +35,32 @@ class UpdateForm extends Component {
                         <span >网关编码</span>
                         {
                             getFieldDecorator('gatewayCode', {
-                                initialValue: gatewayInfo.gatewayCode
+                                initialValue: gatewayInfo.gatewayCode,
+                                rules: [{required: true, message: '网关编码必须输入'}],
+                            })(
+                                <Input disabled={true}/>
+                            )
+                        }
+                    </Item>
+                    <Item>
+                        <span >网关名称</span>
+                        {
+                            getFieldDecorator('gatewayName', {
+                                initialValue: gatewayInfo.gatewayName,
+                                rules: [{required: true, message: '网关名称必须输入'}],
                             })(
                                 <Input/>
                             )
                         }
                     </Item>
                     <Item>
+                        <span >网关描述</span>
                         {
                             getFieldDecorator('detail', {
-                                initialValue: gatewayInfo.detail
+                                initialValue: gatewayInfo.detail,
+                                rules: [{required: true, message: '必须包含描述信息'}],
                             })(
-                                <Input/>
+                                <TextArea autoSize/>
                             )
                         }
                     </Item>

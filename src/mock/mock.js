@@ -16,6 +16,7 @@ Mock.mock('/login/login', {
         data: {
             username: "hahaha",
             password: "asdasd",
+            role:"admin"
         }
     }
 )
@@ -26,73 +27,82 @@ Mock.mock('/gateway/query', {
             {
 
                 gatewayCode: '342',
+                gatewayName:'342全网网关',
                 detail: '全网网关阿萨德和数据库就好丰盛的接口和圣诞节开发红色经典看收到就好是 对接好使的接口和时间的话收到就好收到接口和是可见回复蜀客多积货时刻',
-                joinTime: '2019',
+                createTime: 1576478282000,
+            },
+            {
+                gatewayCode: '10017',
+                gatewayName:'10017网关',
+                detail: '本网网关',
+                createTime: 1576478282000,
+            },
+            {
+                gatewayCode: '10017',
+                gatewayName:'10017网关',
+                detail: '本网网关',
+                createTime: 1576478282000,
+            },
+            {
+                gatewayCode: '10017',
+                gatewayName:'10017网关',
+                detail: '本网网关',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
             {
                 gatewayCode: '10017',
                 detail: '本网网关',
-                joinTime: '2019',
-            },
-            {
-                gatewayCode: '10017',
-                detail: '本网网关',
-                joinTime: '2019',
-            },
-            {
-                gatewayCode: '10017',
-                detail: '本网网关',
-                joinTime: '2019',
-            },
-            {
-                gatewayCode: '10017',
-                detail: '本网网关',
-                joinTime: '2019',
+                createTime: '2019',
             },
         ]
     }
 )
 Mock.mock('/gateway/update', {
         respCode: 0,
-        respDesc: "登录成功",
+        respDesc: "更新成功",
     }
 )
 
+Mock.mock('/gateway/add', {
+        respCode: 0,
+        respDesc: "插入成功",
+    }
+)
 
 Mock.mock('/template/query', {
         respCode: 0,
