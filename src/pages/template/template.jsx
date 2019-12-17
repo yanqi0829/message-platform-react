@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Switch,Route} from "react-router-dom";
+import {Switch,Route,Redirect} from "react-router-dom";
 import TemplateAddUpdate from './add-update'
 import TemplateDetail from './detail'
 import TemplateHome from './home'
@@ -14,6 +14,7 @@ export default class Template extends Component {
             <Route path='/template' component={TemplateHome} exact/>    /*6.1 需要使用路径完全匹配,不用逐层匹配*/
             <Route path='/template/addupdate' component={TemplateAddUpdate} exact/>
             <Route path='/template/detail' component={TemplateDetail} exact/>
+            <Redirect to='/template'/>
         </Switch>
     )
     }

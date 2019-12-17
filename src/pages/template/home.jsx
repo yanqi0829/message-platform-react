@@ -8,8 +8,9 @@ import {
     Table
 } from 'antd'
 import LinkButton from "../../components/link-button";
-import {reqTemplates} from '../../api/'
+import {reqTemplates, reqAllTemplates} from '../../api/'
 import {PAGE_SIZE} from '../../utils/constants'
+import {formateDate} from "../../utils/dateUtils";
 
 const Option = Select.Option
 /*
@@ -24,9 +25,9 @@ export default class TemplateHome extends Component {
     initColumns = () => {
         this.columns = [
             {
-                title: '网关名称',
-                dataIndex: 'gatewayName',
-                key: 'gatewayName',
+                title: '网关编码',
+                dataIndex: 'gatewayCode',
+                key: 'gatewayCode',
             },
             {
                 title: '模版ID',
@@ -36,8 +37,8 @@ export default class TemplateHome extends Component {
 
             {
                 title: '模版内容',
-                dataIndex: 'templateContent',
-                key: 'templateContent',
+                dataIndex: 'templateComment',
+                key: 'templateComment',
                 onCell: () => {
                     return {
                         style: {
@@ -51,20 +52,36 @@ export default class TemplateHome extends Component {
             },
             {
                 title: '申请时间',
-                dataIndex: 'requestTime',
-                key: 'requestTime',
+                dataIndex: 'applyTime',
+                key: 'applyTime',
+                render: (applyTime) => formateDate(applyTime)
             },
             {
                 title: '审核时间',
-                dataIndex: 'verifyTime',
-                key: 'verifyTime',
+                dataIndex: 'auditTime',
+                key: 'auditTime',
+                render: (auditTime) => formateDate(auditTime)
             },
             {
                 width: 100,
                 title: '状态',
                 dataIndex: 'status',
                 key: 'status',
-
+                render: (status) => {
+                    switch (status) {
+                        case "0":
+                            return "未审核";
+                            break;
+                        case "1":
+                            return "已审核";
+                            break;
+                        case "2":
+                            return "未通过";
+                            break;
+                        default:
+                            return null;
+                    }
+                }
             },
             {
                 title: '操作',
@@ -92,7 +109,7 @@ export default class TemplateHome extends Component {
     /*获取指定页码的列表数据显示*/
     getTemplates = async (pageNum) => {
         this.setState({loading: true})
-        const result = await reqTemplates(pageNum, PAGE_SIZE)
+        const result = await reqTemplates(pageNum,PAGE_SIZE)
         this.setState({loading: false})
         if (result.respCode === 0) {
             const list = result.data
@@ -106,20 +123,20 @@ export default class TemplateHome extends Component {
     }
 
     componentDidMount() {
-        this.getTemplates(1)
+        this.getTemplates(1)   //默认获取第一页数据
     }
 
     render() {
         const {templates, loading, total} = this.state
         const title = (
             <span>
-                模版列表
-              {/*  <Select value='1' style={{width: 150}}>     查询分页略 --62
+                {/*模版列表*/}
+                <Select value='1' style={{width: 150}}>
                     <Option value='1'>按网关搜索</Option>
                     <Option value='2'>按模版ID搜索</Option>
                 </Select>
                     <Input placeholder='关键字' style={{width: 150, margin: '0 15px'}}/>
-                    <Button type='primary'>搜索</Button>*/}
+                    <Button type='primary'>搜索</Button>
             </span>
         )
         const extra = (
@@ -133,16 +150,15 @@ export default class TemplateHome extends Component {
                 <Table dataSource={templates}
                        columns={this.columns}
                        bordered
-                    // loading={true}
                        loading={loading}
-                       rowKey='templateId'
+                    // rowKey='templateId'
                        pagination={{
                            total,
                            defaultPageSize: PAGE_SIZE,
                            showQuickJumper: true,
-                           onChange: (pageNum) => {
-                               this.getTemplates(pageNum)
-                           }  /*点击页数监听*/
+                            onChange: (pageNum) => {
+                                this.getTemplates(pageNum)
+                            }     /*点击页数监听*/
                        }}
                 />
             </Card>
