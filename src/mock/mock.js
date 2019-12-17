@@ -115,7 +115,7 @@ Mock.mock('/template/query', {
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
                 auditTime: '2019',
-                status: '0',
+                joinFlag: '0',
             },
             {
                 gatewayCode: '342',
@@ -123,7 +123,7 @@ Mock.mock('/template/query', {
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
                 auditTime: '2019',
-                status: '0',
+                joinFlag: '0',
             },
             {
                 gatewayCode: '342',
@@ -131,20 +131,20 @@ Mock.mock('/template/query', {
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
                 auditTime: '2019',
-                status: '0',
+                joinFlag: '0',
             }, {
                 gatewayCode: '342',
                 templateId: '123123132123',
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
                 auditTime: '2019',
-                status: '0',
+                joinFlag: '0',
             }, {
                 gatewayCode: '342',
                 templateId: '123123132123',
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
-                status: '0',
+                joinFlag: '0',
             },
         ]
     }

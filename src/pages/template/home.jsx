@@ -65,10 +65,10 @@ export default class TemplateHome extends Component {
             {
                 width: 100,
                 title: '状态',
-                dataIndex: 'status',
-                key: 'status',
-                render: (status) => {
-                    switch (status) {
+                dataIndex: 'joinFlag',
+                key: 'joinFlag',
+                render: (joinFlag) => {
+                    switch (joinFlag) {
                         case "0":
                             return "未审核";
                             break;
@@ -79,7 +79,7 @@ export default class TemplateHome extends Component {
                             return "未通过";
                             break;
                         default:
-                            return null;
+                            return "";
                     }
                 }
             },
