@@ -72,7 +72,7 @@ export default class Category extends Component {
                         <LinkButton onClick={() => this.queryDetail(gateway)}>查看</LinkButton>
                         {/*{1===2 ? <LinkButton>修改</LinkButton>:null}*/}
                         {memoryUtils.user.role != "user" ?
-                            <LinkButton onClick={() => this.showUpdate(gateway)}>修改</LinkButton> : null}
+                            <LinkButton onClick={() => this.showUpdate(gateway)}>修改</LinkButton> :  <LinkButton onClick={() => this.join(gateway)}>申请接入</LinkButton>}
                         {/*<LinkButton onClick={()=>this.showUpdate(gateway)}>修改</LinkButton>*/}
             </span>
                 ),
@@ -193,7 +193,7 @@ export default class Category extends Component {
         const gateway = this.gateway || {} //如果还没有指定一个空对象  因为上来 column中render会先渲染
         const title = '网关列表'
         const extra = (
-            <Button type='primary' onClick={this.showAdd}>
+            <Button type='primary' disabled ={memoryUtils.user.role == "user"}onClick={this.showAdd}>
                 <Icon type='plus'/>
                 添加
             </Button>
