@@ -16,7 +16,7 @@ Mock.mock('/login/login', {
         data: {
             username: "hahaha",
             password: "asdasd",
-            role:"admin"
+            role:"test"
         }
     }
 )

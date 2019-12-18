@@ -5,6 +5,8 @@ import logo from "../../assets/images/logo.png";
 import {Menu, Icon, Button} from 'antd';
 import menuList from '../../config/menuConfig'
 
+import memoryUtils from '../../utils/memoryUtils'
+
 const {SubMenu} = Menu;
 
 /*
@@ -28,41 +30,52 @@ class LeftNav extends Component {
 
     */
     getMenuNodes = (menuList) => {
+        const user = memoryUtils.user
         const path = this.props.location.pathname
         return menuList.map(item => {
-                if (!item.children) {
-                    return (
-                        <Menu.Item key={item.key}>
-                            <Link to={item.key}>
-                                <Icon type={item.icon}/>
-                                <span>{item.title}</span>
-                            </Link>
-                        </Menu.Item>
+                //如果当前用户有item对应的权限，才需要显示对应的
 
-                    )
+                if (!item.children) {
+                    if (item.noAuthority && item.noAuthority.indexOf(user.role) != -1) {
+                        return;
+                    } else {
+                        return (
+                            <Menu.Item key={item.key}>
+                                <Link to={item.key}>
+                                    <Icon type={item.icon}/>
+                                    <span>{item.title}</span>
+                                </Link>
+                            </Menu.Item>
+
+                        )
+                    }
                 } else {
                     //查找一个与当前请求路径匹配的子Item
                     // const cItem = item.children.find(cItem => cItem.key === path)
-                    const cItem = item.children.find(cItem => path.indexOf(cItem.key) === 0)
-                    if (cItem) {
-                        this.openKey = item.key  //得到父的key
-                    }
-                    return (
-                        <SubMenu
-                            key={item.key}
-                            title={
-                                <span>
+
+                    if (item.noAuthority && item.noAuthority.indexOf(user.role) != -1) {
+                        return;
+                    } else {
+                        const cItem = item.children.find(cItem => path.indexOf(cItem.key) === 0)
+                        if (cItem) {
+                            this.openKey = item.key  //得到父的key
+                        }
+                        return (
+                            <SubMenu
+                                key={item.key}
+                                title={
+                                    <span>
                 <Icon type={item.icon}/>
                 <span>{item.title}</span>
               </span>
-                            }
-                        >
-                            {this.getMenuNodes(item.children)}
-                        </SubMenu>
+                                }
+                            >
+                                {this.getMenuNodes(item.children)}
+                            </SubMenu>
 
-                    )
+                        )
+                    }
                 }
-
 
             }
         )

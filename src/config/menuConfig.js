@@ -3,6 +3,7 @@ const menuList = [
         title: '首页', // 菜单标题名称
         key: '/home', // 对应的path
         icon: 'home', // 图标名称
+
     },
     {
         title: '模版项',
@@ -24,17 +25,20 @@ const menuList = [
     {
         title: '用户管理',
         key: '/user',
-        icon: 'user'
+        icon: 'user',
+        noAuthority: [ 'user'],
     },
     {
         title: '角色管理',
         key: '/role',
         icon: 'safety',
+        noAuthority: [ 'user','admin','manager'],
     },
     {
         title: '图形图表',
         key: '/charts',
         icon: 'area-chart',
+        noAuthority: [ 'user','admin','manager'],
         children: [
             {
                 title: '柱形图',
