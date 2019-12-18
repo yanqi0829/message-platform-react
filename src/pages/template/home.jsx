@@ -90,11 +90,9 @@ export default class TemplateHome extends Component {
                 width: 150,
                 render: (template) => (   /*5.5 事件函数传参数*/
                     <span>
-         {/*  <LinkButton onClick={this.queryDetail(gateway)}>查看</LinkButton>  可以发现刷新直接执行6次*/}
-                        {/*如何向事件回调函数传参：先定义匿名函数，再调用函数*/}
-                        <LinkButton onClick={() => this.queryDetail(template)}>详情</LinkButton>
-                        {/*{1===2 ? <LinkButton>修改</LinkButton>:null}*/}
-                        <LinkButton onClick={() => this.showUpdate(template)}>修改</LinkButton>
+                        {/*本组件是路由组件 可以用history*/}
+                        <LinkButton onClick={() => this.props.history.push('/template/detail',template)}>详情</LinkButton>
+                        <LinkButton onClick={() => this.props.history.push('/template/addupdate',template)}>修改</LinkButton>
             </span>
                 ),
             },
@@ -108,6 +106,7 @@ export default class TemplateHome extends Component {
 
     /*获取指定页码的列表数据显示*/
     getTemplates = async (pageNum) => {
+        this.pageNum=pageNum
         this.setState({loading: true})
         const result = await reqTemplates(pageNum,PAGE_SIZE)
         this.setState({loading: false})
@@ -140,13 +139,14 @@ export default class TemplateHome extends Component {
             </span>
         )
         const extra = (
-            <Button type='primary'>
+            <Button type='primary' onClick={()=>this.props.history.push("/template/addupdate")}>
                 <Icon type='plus'></Icon>
                 模版申请
             </Button>
         )
         return (
-            <Card title={title} extra={extra}>
+            <Card  extra={extra}>
+           {/* <Card title={title} extra={extra}>*/}
                 <Table dataSource={templates}
                        columns={this.columns}
                        bordered

@@ -3,6 +3,7 @@ import {Switch,Route,Redirect} from "react-router-dom";
 import TemplateAddUpdate from './add-update'
 import TemplateDetail from './detail'
 import TemplateHome from './home'
+import './template.less'
 
 /*
 模版路由组件

@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 import './index.less'
-import {Link,withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import logo from "../../assets/images/logo.png";
 import {Menu, Icon, Button} from 'antd';
 import menuList from '../../config/menuConfig'
 
 const {SubMenu} = Menu;
+
 /*
 4.1 左侧导航组件
     Menu组件使用antd，在pages中创建各路由组件， admin管理页去映射
  */
- class LeftNav extends Component {
+class LeftNav extends Component {
     /*
         根据menu的数据数组生成对应的标签数组
          {
@@ -41,9 +42,10 @@ const {SubMenu} = Menu;
                     )
                 } else {
                     //查找一个与当前请求路径匹配的子Item
-                    const cItem = item.children.find(cItem=>cItem.key===path)
-                    if(cItem){
-                        this.openKey=item.key  //得到父的key
+                    // const cItem = item.children.find(cItem => cItem.key === path)
+                    const cItem = item.children.find(cItem => path.indexOf(cItem.key) === 0)
+                    if (cItem) {
+                        this.openKey = item.key  //得到父的key
                     }
                     return (
                         <SubMenu
@@ -65,19 +67,23 @@ const {SubMenu} = Menu;
             }
         )
     }
+
     componentWillMount() {
-        this.menuNodes=  this.getMenuNodes(menuList)
+        this.menuNodes = this.getMenuNodes(menuList)
     }
 
 
-     render() {
+    render() {
         // debugger
         //得到当前请求的路径
-        const path = this.props.location.pathname
+        let path = this.props.location.pathname
+        if (path.indexOf('/template') === 0) {
+            path = '/template'
+        }
         //得到需要打开的菜单项的key
-        const openKey=this.openKey
+        const openKey = this.openKey
 
-         return (
+        return (
             <div className='left-nav'>
                 <Link to='/' className='left-nav-header'>
                     <img src={logo} alt="logo"/>
@@ -144,8 +150,9 @@ const {SubMenu} = Menu;
         )
     }
 }
+
 /* 4.5withRouter 高阶组件  返回新的组件  传递3个属性 history location match
    使得刷新页面仍然选中之前标签
 * */
-export default  withRouter(LeftNav)
+export default withRouter(LeftNav)
 

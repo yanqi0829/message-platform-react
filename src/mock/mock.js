@@ -111,11 +111,12 @@ Mock.mock('/template/query', {
         data: [
             {
                 gatewayCode: '342',
-                templateId: '123123132123',
+                templateId: '999999123111',
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
                 auditTime: '2019',
                 joinFlag: '0',
+                couldSend:50000,
             },
             {
                 gatewayCode: '342',
