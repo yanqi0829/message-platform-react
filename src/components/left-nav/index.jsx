@@ -105,7 +105,7 @@ class LeftNav extends Component {
                 <Menu
                     // defaultSelectedKeys={[path]}
                     selectedKeys={[path]}   // 刷新页面，依然选中原有菜单项  因为 leftNav 组件更新
-                    defaultOpenKeys={[openKey]}   //默认展开
+                    defaultOpenKeys={[openKey,'/templates']}   //默认展开
                     mode="inline"
                     theme="dark"
                 >

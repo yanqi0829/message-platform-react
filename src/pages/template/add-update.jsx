@@ -45,7 +45,7 @@ class TemplateAddUpdate extends Component {
                 <LinkButton onClick={() => this.props.history.goBack()}>
                 <Icon type='arrow-left' style={{marginRight: 15, fontSize: 20}}></Icon>
                 </LinkButton>
-                <span>{isUpdate?'修改模版':'申请模版'}</span>
+                <span>{isUpdate?'修改模版':'申请模版'}&nbsp;&nbsp;&nbsp;{template.templateId}</span>
             </span>
         )
 
@@ -68,21 +68,21 @@ class TemplateAddUpdate extends Component {
                             rules: [{required: true, message: '必须选择网关'},
                             ],
                         })(
-                            <Input placeholder="请输入网关编码"/>,
+                            <Input placeholder="请输入网关编码" disabled={isUpdate} style={{width: 150}}/>,
                         )}
                     </Item>
                     <Item label="模版内容">
                         {getFieldDecorator('templateComment', {
-                            initialValue: '',
+                            initialValue:template.templateComment,
                             rules: [{required: true, message: '必须填写模版内容'},
                             ],
                         })(
                             <TextArea autoSize={{minRows: 3, maxRows: 3}}/>
                         )}
                     </Item>
-                    <Item label="发送数量">
+                    <Item label="发送数量(条)">
                         {getFieldDecorator('couldSend', {
-                            initialValue: '',
+                            initialValue:template.couldSend,
                             rules: [{required: true, message: '必须填写发送条数'},
                                 {validator: this.validatorCount}
                             ],
