@@ -16,7 +16,10 @@ Mock.mock('/login/login', {
         data: {
             username: "hahaha",
             password: "asdasd",
-            role:"test"
+            systemCode:"A800",
+            name:"延期",
+            role:"test",
+serialNumber:"123412415"
         }
     }
 )
@@ -161,5 +164,17 @@ Mock.mock('/gateway/role', {
             {role_name: "sdjh ", create_time: '2019年十一', auth_time: "2020年年", auth_name: '经理人',_id:"7a523sd4as4d"},
             {role_name: "asd ", create_time: '2019年十一', auth_time: "2020年年", auth_name: '经理人',_id:"asd84as56d4sdf"},
         ]
+    }
+)
+
+Mock.mock('/template/update', {
+        respCode: 0,
+        respDesc: "更新成功",
+    }
+)
+
+Mock.mock('/template/add', {
+        respCode: 0,
+        respDesc: "添加成功",
     }
 )

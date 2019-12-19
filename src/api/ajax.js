@@ -27,7 +27,7 @@ export  default  function ajax(url,data={},type='GET' ) {
         //2.如果成功 调用resolve（value）
         promise.then(response=>{
             resolve(response.data)  //此处优化，后续得到不是response 而是data
-            console.log("调用接口返回内容",response.data)
+            // console.log("调用接口返回内容",response.data)
             //3.如果失败，不调用reject（reason），而是提示异常信息
         }).catch(error=>{
             //reject(error)
