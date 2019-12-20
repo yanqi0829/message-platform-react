@@ -178,3 +178,112 @@ Mock.mock('/template/add', {
         respDesc: "添加成功",
     }
 )
+
+Mock.mock('/user/query', {
+        respCode: 0,
+        respDesc: "查询成功",
+        total: 20,
+        data: [
+            {
+                username: 'admin1',
+                password: '123456',
+                name: '测试人员',
+                serialNumber: '13945444444',
+                systemCode: 'A800',
+                groupName: '自然人',
+                department:'哈尔滨软件研究院',
+                email:'61263123@111.com',
+                role:'admin',
+                createBy:'wang',
+                updateBy:'wang',
+            },
+            {
+                username: 'admin1',
+                password: '123456',
+                name: '测试人员',
+                serialNumber: '13945444444',
+                systemCode: 'A800',
+                groupName: '自然人',
+                department:'哈尔滨软件研究院',
+                email:'61263123@111.com',
+                role:'admin',
+                createBy:'wang',
+                updateBy:'wang',
+            },{
+                username: 'admin1',
+                password: '123456',
+                name: '测试人员',
+                serialNumber: '13945444444',
+                systemCode: 'A800',
+                groupName: '自然人',
+                department:'哈尔滨软件研究院',
+                email:'61263123@111.com',
+                role:'admin',
+                createBy:'wang',
+                updateBy:'wang',
+            },{
+                username: 'admin1',
+                password: '123456',
+                name: '测试人员',
+                serialNumber: '13945444444',
+                systemCode: 'A800',
+                groupName: '自然人',
+                department:'哈尔滨软件研究院',
+                email:'61263123@111.com',
+                role:'admin',
+                createBy:'wang',
+                updateBy:'wang',
+            },{
+                username: 'admin1',
+                password: '123456',
+                name: '测试人员',
+                serialNumber: '13945444444',
+                systemCode: 'A800',
+                groupName: '自然人',
+                department:'哈尔滨软件研究院',
+                email:'61263123@111.com',
+                role:'admin',
+                createBy:'wang',
+                updateBy:'wang',
+            },{
+                username: 'admin1',
+                password: '123456',
+                name: '测试人员',
+                serialNumber: '13945444444',
+                systemCode: 'A800',
+                groupName: '自然人',
+                department:'哈尔滨软件研究院',
+                email:'61263123@111.com',
+                role:'admin',
+                createBy:'wang',
+                updateBy:'wang',
+            },{
+                username: 'admin1',
+                password: '123456',
+                name: '测试人员',
+                serialNumber: '13945444444',
+                systemCode: 'A800',
+                groupName: '自然人',
+                department:'哈尔滨软件研究院',
+                email:'61263123@111.com',
+                role:'admin',
+                createBy:'wang',
+                updateBy:'wang',
+            },
+        ]
+    }
+)
+
+
+
+Mock.mock('/user/update', {
+        respCode: 0,
+        respDesc: "更新成功",
+    }
+)
+
+Mock.mock('/user/add', {
+        respCode: 0,
+        respDesc: "添加成功",
+    }
+)

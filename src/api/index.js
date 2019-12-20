@@ -12,6 +12,9 @@ export  const  reqLogin=(username,password)=>ajax('/login/login',{username,passw
 
 //添加用户 user是个对象
 export  const  reqAddUser=(user)=>ajax('/manage/user/add',user,'POST')
+//分页查询用户  mock get 传参未解决   生产打包需要打开注释
+// export  const  reqUsers=(pageNum,pageSize)=>ajax('/user/query',{pageNum,pageSize})
+export  const  reqUsers=(pageNum,pageSize)=>ajax('/user/query')
 
 //查询网关信息 查询使用get请求
 export  const  reqGatewayInfo=()=>ajax('/gateway/query')
@@ -24,7 +27,7 @@ export  const  updateGatewayInfo=(gatewayInfo)=>ajax('/gateway/update',gatewayIn
 
 //获取模版分页列表  mock get 传参未解决   生产打包需要打开注释
 // export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query',{pageNum,pageSize})
-//1.2
+
 export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query')
 
 export  const  reqAllTemplates=()=>ajax('/template/query')
@@ -34,5 +37,7 @@ export  const  reqRolesInfo=()=>ajax('/gateway/role')
 
 //获取所有角色列表 查询使用get请求
 export  const  reqAddRole=(name)=>ajax('/gateway/role/add',{name},"POST")
-//添加修改 模版
+//添加 修改用户
 export const reqAddOrUpdateTemplate = (template) => ajax( '/template/' + ( template.flag?'update':'add'), template, 'POST')
+//添加 修改用户
+export const reqAddOrUpdateUser = (user) => ajax( '/user/' + ( user.flag?'update':'add'), user, 'POST')

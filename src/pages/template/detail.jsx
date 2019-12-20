@@ -20,8 +20,8 @@ export default class TemplateDetail extends Component {
             <span className='left'>
                 <LinkButton onClick={()=>this.props.history.goBack()}>
                 <Icon type='arrow-left' style={{marginRight:15,fontSize:20}}></Icon>
-                </LinkButton>
                 <span>模版详情</span>
+                </LinkButton>
             </span>
         )
         return(
