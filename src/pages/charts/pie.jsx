@@ -103,10 +103,10 @@ export default class Pie extends Component {
                     radius : '55%',
                     center: ['50%', '50%'],
                     data:[
-                        {value:335, name:'直接访问'},
-                        {value:310, name:'邮件营销'},
-                        {value:274, name:'联盟广告'},
-                        {value:235, name:'视频广告'},
+                        {value:335, name:'活动中心'},
+                        {value:310, name:'权益中心'},
+                        {value:274, name:'策略中心'},
+                        {value:235, name:'运营平台'},
                         {value:400, name:'搜索引擎'}
                     ].sort(function (a, b) { return a.value - b.value; }),
                     roseType: 'radius',

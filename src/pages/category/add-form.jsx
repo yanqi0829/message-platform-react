@@ -16,7 +16,7 @@ const {TextArea} = Input;
 * */
 class AddForm extends Component {
     static  propTypes = {
-        gatewayInfo: PropTypes.object.isRequired,
+        // gatewayInfo: PropTypes.object.isRequired,
         setForm:PropTypes.func.isRequired
     }
 
@@ -25,6 +25,7 @@ class AddForm extends Component {
     }
 
     render() {
+
         const {getFieldDecorator} = this.props.form
         return (
             <div>

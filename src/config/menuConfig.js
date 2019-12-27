@@ -16,10 +16,20 @@ const menuList = [
                 icon: 'bars'
             },
             {
+                title: '网关审核',
+                key: '/gatewayAudit',
+                icon: 'bank',
+            },
+            {
                 title: '模版预览',
                 key: '/template',
                 icon: 'tool'
             },
+           /* {
+                title: '模版审核',
+                key: '/adminAudit',
+                icon: 'control',
+            },*/
         ]
     },
     {

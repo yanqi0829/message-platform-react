@@ -15,7 +15,7 @@ const TextArea = Input.TextArea
 export default class TemplateDetail extends Component {
     render() {
         console.log("接收到的数据为", this.props.location.state)
-        const {department, groupName, systemCode, name, username, email, role, createBy,serialNumber} = this.props.location.state
+        const {department, groupName, systemCode, systemName,name, username, email, role, createBy,serialNumber} = this.props.location.state
 
         const title = (
             <span className='left'>
@@ -89,6 +89,12 @@ export default class TemplateDetail extends Component {
                             <Item>
                                 <span className='left'>&nbsp;&nbsp;&nbsp;手机号：</span>
                                 <span>{serialNumber}</span>
+                            </Item>
+                        </Col>
+                        <Col span={12}>
+                            <Item>
+                                <span className='left'>系统名称：</span>
+                                <span>{systemName}</span>
                             </Item>
                         </Col>
                     </Row>

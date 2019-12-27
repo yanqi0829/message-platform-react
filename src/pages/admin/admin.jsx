@@ -7,11 +7,13 @@ import  LeftNav from '../../components/left-nav'
 import Home from '../home/home'
 import User from '../user/user'
 import Template from '../template/template'
+import TemplateAudit from '../template/audit'
 import Role from '../role/role'
 import Bar from '../charts/bar'
 import Line from '../charts/line'
 import Pie from '../charts/pie'
 import Category from '../category/category'
+import CategoryAudit from '../category/audit'
 const {  Footer, Sider, Content } = Layout;
 
 // import {Button} from "antd";
@@ -45,7 +47,9 @@ export  default  class Admin extends Component{
                     <Switch>
                         <Route path='/home' component={Home}/>
                         <Route path='/category' component={Category}/>
+                        <Route path='/gatewayAudit' component={CategoryAudit}/>
                         <Route path='/template' component={Template}/>
+                        {/*<Route path='/adminAudit' component={TemplateAudit}/>*/}
                         <Route path='/user' component={User}/>
                         <Route path='/role' component={Role}/>
                         <Route path='/charts/bar' component={Bar}/>

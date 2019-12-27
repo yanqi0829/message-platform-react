@@ -20,12 +20,12 @@ class TemplateAddUpdate extends Component {
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 // 1. 收集数据, 并封装成对象
-                const {department, groupName,systemCode,name,username,password,email,role,serialNumber} = values
+                const {department, groupName,systemCode,systemName,name,username,password,email,role,serialNumber} = values
                 let user
                 if (this.isUpdate) {
-                    user = {department, groupName,systemCode,name,username,password,email,role,serialNumber,updateBy:memoryUtils.user.name}
+                    user = {department, groupName,systemCode,systemName,name,username,password,email,role,serialNumber,updateBy:memoryUtils.user.name}
                 } else {
-                    user = {department, groupName,systemCode,name,username,password,email,role,serialNumber,createBy:memoryUtils.user.name}
+                    user = {department, groupName,systemCode,systemName,name,username,password,email,role,serialNumber,createBy:memoryUtils.user.name}
                 }
                 // console.log("待提交模版信息",template)
                 // 如果是更新, 需要添加_id
@@ -174,6 +174,8 @@ class TemplateAddUpdate extends Component {
                             </Item>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col span={12}>
                     <Item label="手机号">
                         {getFieldDecorator('serialNumber', {
                             initialValue: user.serialNumber,
@@ -183,6 +185,19 @@ class TemplateAddUpdate extends Component {
                             <Input placeholder="请输入手机号" style={{width: 150}}/>,
                         )}
                     </Item>
+                        </Col>
+                        <Col span={12}>
+                            <Item label="系统名称">
+                                {getFieldDecorator('systemName', {
+                                    initialValue: user.systemName,
+                                    rules: [{required: true, message: '必须填写系统名称'},
+                                    ],
+                                })(
+                                    <Input placeholder="请输入系统名称" style={{width: 150}}/>,
+                                )}
+                            </Item>
+                        </Col>
+                        </Row>
 
                     <Item>
                         <Button type="primary" style={{marginLeft: "30%"}} onClick={this.submit}>提交</Button>

@@ -9,9 +9,10 @@ import {
 } from 'antd'
 import './index.less'
 import LinkButton from '../../components/link-button'
-import {reqGatewayInfo, updateGatewayInfo, addGateway} from '../../api/'
+import {reqGatewayInfo, updateGatewayInfo, addGateway,joinGateway} from '../../api/'
 import AddForm from './add-form'
 import UpdateForm from './update-form'
+import  JoinGateway from './join-gateway'
 import memoryUtils from '../../utils/memoryUtils'
 import {formateDate} from '../../utils/dateUtils'
 
@@ -23,7 +24,7 @@ export default class Category extends Component {
     state = {
         gateways: [],  //网关列表
         loading: false,   //5.4.1 是否正在获取数据中
-        showStatus: 0,   //表示添加、修改的确认框是否显示  0都不显示， 1显示添加 2显示修改  3查看信息
+        showStatus: 0,   //表示添加、修改的确认框是否显示  0都不显示， 1显示添加 2显示修改  3查看信息 4 申请接入页
 
     }
     //5.3初始化table所有列的数组
@@ -55,7 +56,12 @@ export default class Category extends Component {
                 }
             },
             {
-                title: '接入时间',
+                title: '接口规范编码',
+                dataIndex: 'gatewayType',
+                key: 'gatewayType',
+            },
+            {
+                title: '网关接入时间',
                 dataIndex: 'createTime',
                 key: 'createTime',
                 render: (createTime) => formateDate(createTime)
@@ -69,16 +75,32 @@ export default class Category extends Component {
                     <span>
          {/*  <LinkButton onClick={this.queryDetail(gateway)}>查看</LinkButton>  可以发现刷新每渲染一行执行一次*/}
                         {/*如何向事件回调函数传参：先定义匿名函数，再调用函数*/}
+
                         <LinkButton onClick={() => this.queryDetail(gateway)}>查看</LinkButton>
                         {/*{1===2 ? <LinkButton>修改</LinkButton>:null}*/}
                         {memoryUtils.user.role != "user" ?
-                            <LinkButton onClick={() => this.showUpdate(gateway)}>修改</LinkButton> :  <LinkButton onClick={() => this.join(gateway)}>申请接入</LinkButton>}
+                            <LinkButton onClick={() => this.showUpdate(gateway)}>修改</LinkButton> :
+                            gateway.joinFlag=="1"? <LinkButton disabled>审核中</LinkButton>:
+                                gateway.joinFlag=="2"? <LinkButton disabled>审核通过</LinkButton>:
+                            <LinkButton onClick={() => this.join(gateway)}>{
+                            }申请接入</LinkButton>}
                         {/*<LinkButton onClick={()=>this.showUpdate(gateway)}>修改</LinkButton>*/}
             </span>
                 ),
             },
         ];
     }
+    /*  网关接入申请*/
+    join = (gateway) => {
+        const user = memoryUtils.user
+        this.gateway =gateway
+        this.setState({
+            showStatus: 4
+        })
+
+    }
+
+
     /*显示查看确认框*/
     queryDetail = (gateway) => {
         this.gateway = gateway
@@ -92,7 +114,8 @@ export default class Category extends Component {
     getGateways = async () => {
         //5.4.2 在发送请求前 显示loading
         this.setState({loading: true})
-        const result = await reqGatewayInfo()
+        const {role,systemCode}=memoryUtils.user
+        const result = await reqGatewayInfo(role,systemCode)
         this.setState({loading: false})
         if (result.respCode === 0) {
             this.setState({    ////题外话：setState可跟随一个回调函数： 在状态更新且render后执行
@@ -132,19 +155,20 @@ export default class Category extends Component {
         // 表单验证
         this.form.validateFields(async (err, values) => {
             if (!err) {
+                debugger
                 const gatewayInfo = this.gateway
                 this.setState({
                     showStatus: 0
                 })
-
                 const addInfo = this.form.getFieldsValue()
+                console.log("添加的网关内容为",addInfo)
                 //清除输入数据
                 this.form.resetFields()
                 const result = await addGateway(addInfo)
                 if (result.respCode === 0) {
-
+                    message.success("添加成功！")
                     this.getGateways()
-                }else{
+                } else {
                     message.error("添加失败！")
                 }
             }
@@ -169,12 +193,41 @@ export default class Category extends Component {
                 const result = await updateGatewayInfo(updateInfo)
                 if (result.respCode === 0) {
                     //5.8.5重新显示列表
+                    message.success("修改成功！")
                     this.getGateways()
-                }else{
+                } else {
                     message.error("修改失败！")
                 }
             }
         })
+    }
+
+    joinGateway=()=>{
+        //进行表单验证
+        this.form.validateFields(async (err, values) => {
+            if (!err) {
+                const gatewayInfo = this.gateway
+                this.setState({
+                    showStatus: 0
+                })
+                const joinInfo = this.form.getFieldsValue()
+                //清除输入数据
+                this.form.resetFields()
+                const  {systemCode,systemName,name}= memoryUtils.user
+                const {gatewayCode}=gatewayInfo
+                const {couldSend,description}=joinInfo
+                console.log("此处打印",gatewayInfo,joinInfo)
+                const joinGatewayInfo={systemCode,systemName,gatewayCode,applyBy:name,couldSend,description}
+                const result = await joinGateway(joinGatewayInfo)
+                if (result.respCode === 0) {
+                    message.success("申请成功！")
+                    this.getGateways()
+                } else {
+                    message.error("申请失败！")
+                }
+            }
+        })
+
     }
 
     /*为第一次render准备数据*/
@@ -193,7 +246,7 @@ export default class Category extends Component {
         const gateway = this.gateway || {} //如果还没有指定一个空对象  因为上来 column中render会先渲染
         const title = '网关列表'
         const extra = (
-            <Button type='primary' disabled ={memoryUtils.user.role == "user"}onClick={this.showAdd}>
+            <Button type='primary' disabled={memoryUtils.user.role == "user"} onClick={this.showAdd}>
                 <Icon type='plus'/>
                 添加
             </Button>
@@ -217,7 +270,7 @@ export default class Category extends Component {
                         onOk={this.addCategory}
                         onCancel={this.handleCancel}
                     >
-                        <AddForm gatewayInfo={gateway}
+                        <AddForm
                                  setForm={(form) => {
                                      this.form = form
                                  }}/>
@@ -252,6 +305,19 @@ export default class Category extends Component {
                     >
                         {/*5.8.1 修改网关信息  gatewayInfo是父组件传给子组件的  那么子组件如何传父组件？--函数传参 */}
                         <UpdateForm gatewayInfo={gateway}
+                                    setForm={(form) => {
+                                        this.form = form
+                                    }}/>
+
+                    </Modal>
+
+                    <Modal
+                        title="申请接入网关"
+                        visible={showStatus === 4}
+                        onOk={this.joinGateway}
+                        onCancel={this.handleCancel}
+                    >
+                        <JoinGateway gatewayInfo={gateway}
                                     setForm={(form) => {
                                         this.form = form
                                     }}/>

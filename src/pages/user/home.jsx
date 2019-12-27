@@ -35,9 +35,9 @@ export default class userHome extends Component {
                 key: 'groupName',
             },
             {
-                title: '系统编码',
-                dataIndex: 'systemCode',
-                key: 'systemCode',
+                title: '系统名称',
+                dataIndex: 'systemName',
+                key: 'systemName',
             },
             {
                 title: '姓名',
