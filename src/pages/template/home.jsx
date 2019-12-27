@@ -11,6 +11,7 @@ import LinkButton from "../../components/link-button";
 import {reqTemplates, reqAllTemplates} from '../../api/'
 import {PAGE_SIZE} from '../../utils/constants'
 import {formateDate} from "../../utils/dateUtils";
+import memoryUtils from '../../utils/memoryUtils'
 
 const Option = Select.Option
 /*
@@ -108,7 +109,9 @@ export default class TemplateHome extends Component {
     getTemplates = async (pageNum) => {
         this.pageNum=pageNum
         this.setState({loading: true})
-        const result = await reqTemplates(pageNum,PAGE_SIZE)
+        const {role,systemCode}=memoryUtils.user
+        const pageInfo={pageNum,pageSize:PAGE_SIZE,role,systemCode}
+        const result = await reqTemplates(pageInfo)
         this.setState({loading: false})
         if (result.respCode === 0) {
             const list = result.data
