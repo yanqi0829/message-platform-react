@@ -3,7 +3,7 @@ import {
     Card,
     Form, Icon,
     Input,
-    Button, message, Row, Col,
+    Button, message, Row, Col, Select,
 } from "antd";
 import LinkButton from "../../components/link-button";
 import {addGateway, reqAddOrUpdateTemplate, reqAddOrUpdateUser} from "../../api";
@@ -11,6 +11,7 @@ import memoryUtils from '../../utils/memoryUtils'
 
 const Item = Form.Item
 const TextArea = Input.TextArea
+const Option=Select.Option
 
 /*
 添加更新子路由组件
@@ -169,7 +170,12 @@ class TemplateAddUpdate extends Component {
                                     rules: [{required: true, message: '必须填写角色'},
                                     ],
                                 })(
-                                    <Input placeholder="请输入角色" style={{width: 150}}/>,
+                                    <Select  placeholder="请选择角色" style={{width:150}}>
+                                        <Option value="user">用户</Option>
+                                        <Option value="admin">管理员</Option>
+                                        <Option value="manager">总院管理层</Option>
+                                    </Select>
+
                                 )}
                             </Item>
                         </Col>
@@ -193,7 +199,7 @@ class TemplateAddUpdate extends Component {
                                     rules: [{required: true, message: '必须填写系统名称'},
                                     ],
                                 })(
-                                    <Input placeholder="请输入系统名称" style={{width: 150}}/>,
+                                    <Input placeholder="请输入系统名称" style={{width: 100}}/>,
                                 )}
                             </Item>
                         </Col>

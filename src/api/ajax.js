@@ -15,16 +15,13 @@ export  default  function ajax(url,data={},type='GET' ) {
     /*3.5 统一处理请求异常  在外层包一个promise对象
     在请求出错时，不reject（error） 而是显示错误提示  注释掉3.4的 try catch*/
     return new Promise((resolve,reject)=>{
-        console.log("ajax中数据",data)
         let promise
             //1.执行ajax请求
         if(type==='GET'){
-            console.log("我是个GET")
             promise= axios.get(url,{
                 params: data  //指定请求参数
             })
         }else{
-            console.log("我是个POST")
             promise= axios.post(url,data)
         }
         //2.如果成功 调用resolve（value）

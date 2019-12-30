@@ -50,6 +50,16 @@ Mock.mock('/template/audit', {
     }
 )
 
+Mock.mock('/gateway/queryJoin', {
+        respCode: 0,
+        respDesc: "成功",
+    data:[
+        {gatewayCode:"10017",key:1},
+        {gatewayCode:"342",key:2},
+    ]
+    }
+)
+
 Mock.mock('/login/login', {
         respCode: 0,
         respDesc: "登录成功",

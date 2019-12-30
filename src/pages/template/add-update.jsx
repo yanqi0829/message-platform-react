@@ -3,32 +3,38 @@ import {
     Card,
     Form, Icon,
     Input,
-    Button, message
+    Button, message,
+    Select
 } from "antd";
 import LinkButton from "../../components/link-button";
-import {addGateway, reqAddOrUpdateTemplate} from "../../api";
+import {addGateway, reqAddOrUpdateTemplate, queryJoinGateway} from "../../api";
 import memoryUtils from '../../utils/memoryUtils'
 
 const Item = Form.Item
 const TextArea = Input.TextArea
+const Option = Select.Option
 
 /*
 添加更新子路由组件
  */
 class TemplateAddUpdate extends Component {
+
+    state={
+        joinGateways:[]
+    }
+
     submit = () => {
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 // 1. 收集数据, 并封装成product对象
                 const {gatewayCode, templateComment, couldSend} = values
-                const {systemCode,name,role} = memoryUtils.user
-                console.log()
+                const {systemCode, name, role} = memoryUtils.user
                 let template
                 if (this.isUpdate) {
                     const {templateId} = this.props.location.state
-                    template = {gatewayCode, templateComment, couldSend, templateId,systemCode,applyBy:name,role}
+                    template = {gatewayCode, templateComment, couldSend, templateId, systemCode, applyBy: name, role}
                 } else {
-                    template = {gatewayCode, templateComment, couldSend,systemCode,applyBy:name}
+                    template = {gatewayCode, templateComment, couldSend, systemCode, applyBy: name}
                 }
                 // console.log("待提交模版信息",template)
                 // 如果是更新, 需要添加_id
@@ -65,8 +71,21 @@ class TemplateAddUpdate extends Component {
         this.template = template || {}
     }
 
+    queyJoinGateways = async () => {
+        const systemCode = memoryUtils.user.systemCode
+        const result = await queryJoinGateway(systemCode)
+        this.setState({
+            joinGateways:result.data
+        })
+    }
+
+    componentDidMount() {
+        this.queyJoinGateways()
+    }
+
     render() {
         const {isUpdate, template} = this
+        const joinGateways = this.state.joinGateways || {}
         const {getFieldDecorator} = this.props.form
         const title = (
             <span className='left'>
@@ -86,19 +105,32 @@ class TemplateAddUpdate extends Component {
             },
         };
 
-
         return (
             <Card title={title}>
                 <Form {...formItemLayout}>
-                    <Item label="网关编码">
-                        {getFieldDecorator('gatewayCode', {
-                            initialValue: template.gatewayCode,
-                            rules: [{required: true, message: '必须选择网关'},
-                            ],
-                        })(
-                            <Input placeholder="请输入网关编码" disabled={isUpdate} style={{width: 150}}/>,
-                        )}
-                    </Item>
+                    {isUpdate ?
+                        <Item label="网关编码">
+                            {getFieldDecorator('gatewayCode', {
+                                initialValue: template.gatewayCode,
+                                rules: [{required: true, message: '必须选择网关'},
+                                ],
+                            })(
+                                <Input placeholder="请输入网关编码" disabled style={{width: 150}}/>,
+                            )}
+                        </Item> : <Item label="网关编码">
+                            {getFieldDecorator('gatewayCode', {
+                                rules: [{required: true, message: '必须选择网关'},
+                                ],
+                            })(
+                                <Select  placeholder="请选择网关" style={{width:200}}>
+
+                                    {
+                                        joinGateways.map(c => <Option value={c.gatewayCode}>{c.gatewayCode}网关</Option>)
+                                    }
+                                </Select>
+                            )}
+                        </Item>
+                    }
                     <Item label="模版内容">
                         {getFieldDecorator('templateComment', {
                             initialValue: template.templateComment,

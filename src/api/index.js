@@ -53,4 +53,6 @@ export const auditCancle = (auditInfo) => ajax('/gateway/auditCancle',auditInfo,
 
 export const auditTemplate=(auditInfo) => ajax('/template/audit',auditInfo,'POST')
 
+export const queryJoinGateway=(systemCode) => ajax('/gateway/queryJoin',{systemCode},'POST')
+
 
