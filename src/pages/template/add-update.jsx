@@ -21,12 +21,12 @@ class TemplateAddUpdate extends Component {
             if (!err) {
                 // 1. 收集数据, 并封装成product对象
                 const {gatewayCode, templateComment, couldSend} = values
-                const {systemCode,name} = memoryUtils.user
+                const {systemCode,name,role} = memoryUtils.user
                 console.log()
                 let template
                 if (this.isUpdate) {
                     const {templateId} = this.props.location.state
-                    template = {gatewayCode, templateComment, couldSend, templateId,systemCode,applyBy:name}
+                    template = {gatewayCode, templateComment, couldSend, templateId,systemCode,applyBy:name,role}
                 } else {
                     template = {gatewayCode, templateComment, couldSend,systemCode,applyBy:name}
                 }
@@ -40,10 +40,10 @@ class TemplateAddUpdate extends Component {
                 // console.log("调用模版更新添加接口",result)
                 // 3. 根据结果提示
                 if (result.respCode === 0) {
-                    message.success(`${this.isUpdate ? '更新' : '添加'}模版成功!`)
+                    message.success(`${this.isUpdate ? '更新' : '新增'}模版申请成功!`)
                     this.props.history.goBack()
                 } else {
-                    message.error(`${this.isUpdate ? '更新' : '添加'}模版失败!`)
+                    message.error(`${this.isUpdate ? '更新' : '新增'}模版失败!`)
                 }
             }
         })

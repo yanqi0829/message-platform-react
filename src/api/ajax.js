@@ -9,7 +9,7 @@ import  {message} from 'antd'
 /*
 3.4引入mockjs
  */
-import  '../mock/mock'
+// import  '../mock/mock'
 export  default  function ajax(url,data={},type='GET' ) {
     // console.log(url,data)
     /*3.5 统一处理请求异常  在外层包一个promise对象

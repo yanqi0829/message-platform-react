@@ -74,10 +74,13 @@ export default class TemplateHome extends Component {
                             return "未审核";
                             break;
                         case "1":
-                            return "已审核";
+                            return "修改待审核";
                             break;
                         case "2":
-                            return "未通过";
+                            return "已审核";
+                            break;
+                        case "3":
+                            return "审核未通过";
                             break;
                         default:
                             return "";
@@ -93,7 +96,7 @@ export default class TemplateHome extends Component {
                     <span>
                         {/*本组件是路由组件 可以用history*/}
                         <LinkButton onClick={() => this.props.history.push('/template/detail',template)}>详情</LinkButton>
-                        <LinkButton onClick={() => this.props.history.push('/template/addupdate',template)}>修改</LinkButton>
+                        {template.joinFlag==="2" ?  <LinkButton onClick={() => this.props.history.push('/template/addupdate',template)}>修改</LinkButton>:""}
             </span>
                 ),
             },

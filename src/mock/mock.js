@@ -44,6 +44,12 @@ Mock.mock('/gateway/auditCancle', {
 )
 
 
+Mock.mock('/template/audit', {
+        respCode: 0,
+        respDesc: "成功",
+    }
+)
+
 Mock.mock('/login/login', {
         respCode: 0,
         respDesc: "登录成功",
@@ -53,7 +59,7 @@ Mock.mock('/login/login', {
             systemCode: "A800",
             systemName: "会员中心",
             name: "延期",
-            role: "user",
+            role: "admin",
             // role:"test",
             serialNumber: "123412415"
         }
@@ -173,20 +179,21 @@ Mock.mock('/template/query', {
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
                 auditTime: '2019',
-                joinFlag: '0',
-            }, {
+                joinFlag: '1',
+            },
+            {
                 gatewayCode: '342',
                 templateId: '123123132123',
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
                 auditTime: '2019',
-                joinFlag: '0',
-            }, {
+                joinFlag: '2',
+            },  {
                 gatewayCode: '342',
                 templateId: '123123132123',
                 templateComment: '2019阿萨德按时',
                 applyTime: 1576478282000,
-                joinFlag: '0',
+                joinFlag: '3',
             },
         ]
     }

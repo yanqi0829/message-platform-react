@@ -13,8 +13,8 @@ export  const  reqLogin=(username,password)=>ajax('/login/login',{username,passw
 //添加用户 user是个对象
 export  const  reqAddUser=(user)=>ajax('/manage/user/add',user,'POST')
 //分页查询用户  mock get 传参未解决   生产打包需要打开注释
-// export  const  reqUsers=(pageNum,pageSize)=>ajax('/user/query',{pageNum,pageSize})
-export  const  reqUsers=(pageNum,pageSize)=>ajax('/user/query')
+export  const  reqUsers=(pageNum,pageSize)=>ajax('/user/query',{pageNum,pageSize})
+// export  const  reqUsers=(pageNum,pageSize)=>ajax('/user/query')
 
 //查询网关信息 查询使用get请求
 export  const  reqGatewayInfo=(role,systemCode)=>ajax('/gateway/query',{role,systemCode},'POST')
@@ -26,8 +26,8 @@ export  const  addGateway=(gatewayInfo)=>ajax('/gateway/add',gatewayInfo,'POST')
 export  const  updateGatewayInfo=(gatewayInfo)=>ajax('/gateway/update',gatewayInfo,'POST')
 
 //获取模版分页列表  mock get 传参未解决   生产打包需要打开注释
-// export  const  reqTemplates=(pageInfo)=>ajax('/template/query',pageInfo,'POST')
-export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query',)
+export  const  reqTemplates=(pageInfo)=>ajax('/template/query',pageInfo,'POST')
+// export  const  reqTemplates=(pageNum,pageSize)=>ajax('/template/query',)
 
 export  const  reqAllTemplates=()=>ajax('/template/query')
 
@@ -50,5 +50,7 @@ export  const  reqAuditGatewayInfo=(role,systemCode)=>ajax('/gateway/audit',{rol
 export const auditOk = (auditInfo) => ajax('/gateway/auditOk',auditInfo,'POST')
 
 export const auditCancle = (auditInfo) => ajax('/gateway/auditCancle',auditInfo,'POST')
+
+export const auditTemplate=(auditInfo) => ajax('/template/audit',auditInfo,'POST')
 
 
