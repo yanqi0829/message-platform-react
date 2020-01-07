@@ -17,7 +17,7 @@ const {TextArea} = Input;
 class AddForm extends Component {
     static  propTypes = {
         // gatewayInfo: PropTypes.object.isRequired,
-        setForm:PropTypes.func.isRequired
+        setForm: PropTypes.func.isRequired
     }
 
     componentWillMount() {
@@ -69,6 +69,16 @@ class AddForm extends Component {
                                 rules: [{required: true, message: '必须包含描述信息'}],
                             })(
                                 <TextArea placeholder='请输入网关描述' autoSize/>
+                            )
+                        }
+                    </Item>
+                    <Item>
+                        {
+                            getFieldDecorator('gatewayType', {
+                                initialValue: '',
+                                rules: [{required: true, message: '必须填写接口规范中的网关类型编码'}],
+                            })(
+                                <Input placeholder='请输入网关类型'/>
                             )
                         }
                     </Item>

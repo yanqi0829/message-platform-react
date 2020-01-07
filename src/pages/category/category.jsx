@@ -155,7 +155,6 @@ export default class Category extends Component {
         // 表单验证
         this.form.validateFields(async (err, values) => {
             if (!err) {
-                debugger
                 const gatewayInfo = this.gateway
                 this.setState({
                     showStatus: 0
